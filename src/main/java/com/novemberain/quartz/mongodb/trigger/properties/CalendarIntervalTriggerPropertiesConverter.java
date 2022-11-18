@@ -11,6 +11,7 @@ public class CalendarIntervalTriggerPropertiesConverter extends TriggerPropertie
     private static final String TRIGGER_REPEAT_INTERVAL_UNIT = "repeatIntervalUnit";
     private static final String TRIGGER_REPEAT_INTERVAL = "repeatInterval";
     private static final String TRIGGER_TIMES_TRIGGERED = "timesTriggered";
+    private static final String TRIGGER_PRESERVE_HOUR_ACROSS_DAYLIGHT_SAVINGS = "preserveHourOfDayAcrossDaylightSavings";
 
     @Override
     protected boolean canHandle(OperableTrigger trigger) {
@@ -25,7 +26,8 @@ public class CalendarIntervalTriggerPropertiesConverter extends TriggerPropertie
         return new Document(original)
                 .append(TRIGGER_REPEAT_INTERVAL_UNIT, t.getRepeatIntervalUnit().name())
                 .append(TRIGGER_REPEAT_INTERVAL, t.getRepeatInterval())
-                .append(TRIGGER_TIMES_TRIGGERED, t.getTimesTriggered());
+                .append(TRIGGER_TIMES_TRIGGERED, t.getTimesTriggered())
+                .append(TRIGGER_PRESERVE_HOUR_ACROSS_DAYLIGHT_SAVINGS, t.isPreserveHourOfDayAcrossDaylightSavings());
     }
 
     @Override
@@ -43,6 +45,10 @@ public class CalendarIntervalTriggerPropertiesConverter extends TriggerPropertie
         Integer timesTriggered = stored.getInteger(TRIGGER_TIMES_TRIGGERED);
         if (timesTriggered != null) {
             t.setTimesTriggered(timesTriggered);
+        }
+        Boolean preserveHourOfDayAcrossDaylightSavings = stored.getBoolean(TRIGGER_PRESERVE_HOUR_ACROSS_DAYLIGHT_SAVINGS);
+        if (preserveHourOfDayAcrossDaylightSavings != null) {
+            t.setPreserveHourOfDayAcrossDaylightSavings(preserveHourOfDayAcrossDaylightSavings);
         }
     }
 }
